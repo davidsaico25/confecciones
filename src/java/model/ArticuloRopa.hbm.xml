@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 22, 2016 1:19:41 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.ArticuloRopa" table="articulo_ropa" catalog="confecciones_bd" optimistic-lock="version">
+        <id name="articuloRopaId" type="java.lang.Integer">
+            <column name="articulo_ropa_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="linea" class="model.Linea" fetch="select">
+            <column name="linea_id" not-null="true" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="nombre" length="45" not-null="true" />
+        </property>
+        <property name="precioVenta" type="double">
+            <column name="precio_venta" precision="22" scale="0" not-null="true" />
+        </property>
+        <property name="precioCosto" type="double">
+            <column name="precio_costo" precision="22" scale="0" not-null="true" />
+        </property>
+        <property name="demanda" type="double">
+            <column name="demanda" precision="22" scale="0" not-null="true" />
+        </property>
+        <set name="articuloRopaHasMaterials" table="articulo_ropa_has_material" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="articulo_ropa_id" not-null="true" />
+            </key>
+            <one-to-many class="model.ArticuloRopaHasMaterial" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 22, 2016 1:19:41 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Planta" table="planta" catalog="confecciones_bd" optimistic-lock="version">
+        <id name="plantaId" type="java.lang.Integer">
+            <column name="planta_id" />
+            <generator class="identity" />
+        </id>
+        <property name="capacidad" type="int">
+            <column name="capacidad" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

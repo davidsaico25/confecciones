@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 22, 2016 1:19:41 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Material" table="material" catalog="confecciones_bd" optimistic-lock="version">
+        <id name="materialId" type="java.lang.Integer">
+            <column name="material_id" />
+            <generator class="identity" />
+        </id>
+        <property name="nombre" type="string">
+            <column name="nombre" length="45" not-null="true" />
+        </property>
+        <property name="cantidad" type="double">
+            <column name="cantidad" precision="22" scale="0" not-null="true" />
+        </property>
+        <property name="precioCostoPorYarda" type="double">
+            <column name="precio_costo_por_yarda" precision="22" scale="0" not-null="true" />
+        </property>
+        <set name="articuloRopaHasMaterials" table="articulo_ropa_has_material" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="material_id" not-null="true" />
+            </key>
+            <one-to-many class="model.ArticuloRopaHasMaterial" />
+        </set>
+    </class>
+</hibernate-mapping>

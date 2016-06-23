@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 22, 2016 1:19:41 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.ArticuloRopaHasMaterial" table="articulo_ropa_has_material" catalog="confecciones_bd" optimistic-lock="version">
+        <composite-id name="id" class="model.ArticuloRopaHasMaterialId">
+            <key-property name="articuloRopaId" type="int">
+                <column name="articulo_ropa_id" />
+            </key-property>
+            <key-property name="materialId" type="int">
+                <column name="material_id" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="articuloRopa" class="model.ArticuloRopa" update="false" insert="false" fetch="select">
+            <column name="articulo_ropa_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="material" class="model.Material" update="false" insert="false" fetch="select">
+            <column name="material_id" not-null="true" />
+        </many-to-one>
+        <property name="cantidad" type="int">
+            <column name="cantidad" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
