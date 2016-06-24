@@ -1,5 +1,5 @@
 package model;
-// Generated Jun 22, 2016 1:19:40 PM by Hibernate Tools 4.3.1
+// Generated Jun 24, 2016 2:20:20 AM by Hibernate Tools 4.3.1
 
 
 
@@ -12,12 +12,12 @@ public class ArticuloRopaHasMaterial  implements java.io.Serializable {
      private ArticuloRopaHasMaterialId id;
      private ArticuloRopa articuloRopa;
      private Material material;
-     private int cantidad;
+     private double cantidad;
 
     public ArticuloRopaHasMaterial() {
     }
 
-    public ArticuloRopaHasMaterial(ArticuloRopaHasMaterialId id, ArticuloRopa articuloRopa, Material material, int cantidad) {
+    public ArticuloRopaHasMaterial(ArticuloRopaHasMaterialId id, ArticuloRopa articuloRopa, Material material, double cantidad) {
        this.id = id;
        this.articuloRopa = articuloRopa;
        this.material = material;
@@ -45,11 +45,11 @@ public class ArticuloRopaHasMaterial  implements java.io.Serializable {
     public void setMaterial(Material material) {
         this.material = material;
     }
-    public int getCantidad() {
+    public double getCantidad() {
         return this.cantidad;
     }
     
-    public void setCantidad(int cantidad) {
+    public void setCantidad(double cantidad) {
         this.cantidad = cantidad;
     }
 

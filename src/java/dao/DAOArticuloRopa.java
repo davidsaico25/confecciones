@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import model.ArticuloRopa;
 import model.HibernateUtil;
+import model.Material;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -25,7 +26,7 @@ public class DAOArticuloRopa extends ADAO_crud<Object> implements Serializable {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM ArticuloRopa ar");
+            Query query = session.createQuery("FROM ArticuloRopa as ar");
             listArticuloRopa = (List<ArticuloRopa>) query.list();
         } catch(Exception e) {
         } finally {
@@ -51,5 +52,22 @@ public class DAOArticuloRopa extends ADAO_crud<Object> implements Serializable {
         listPreciosReporteLingo.add(listPrecioCosto);
         listPreciosReporteLingo.add(listDemanda);
         return listPreciosReporteLingo;
+    }
+    
+    public List<Material> getListMaterial(ArticuloRopa articuloRopa) {
+        List<Material> listMaterial = new ArrayList<>();
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("SELECT arhm.material FROM ArticuloRopaHasMaterial as arhm WHERE arhm.articuloRopa.id = :articuloRopaId");
+            query.setParameter("articuloRopaId", articuloRopa.getArticuloRopaId());
+            listMaterial = (List<Material>) query.list();
+        } catch(Exception e) {
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return listMaterial;
     }
 }
