@@ -11,6 +11,7 @@ import dao.DAOMaterial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import model.ArticuloRopa;
@@ -40,9 +41,10 @@ public class IndexBean implements Serializable {
         daoMaterial = new DAOMaterial();
         dAOArticuloRopaHasMaterial = new DAOArticuloRopaHasMaterial();
         
-        listArticuloRopa = new ArrayList<>();
-        listMaterial = new ArrayList<>();
+        listArticuloRopa = daoArticuloRopa.getListArticuloRopa();//new ArrayList<>();
+        listMaterial = daoMaterial.getListMaterial();//new ArrayList<>();
         listArticuloRopaHasMaterial = dAOArticuloRopaHasMaterial.getListArticuloRopaHasMaterial();
+        /*
         for (ArticuloRopaHasMaterial itemArticuloRopaHasMaterial : listArticuloRopaHasMaterial) {
             ArticuloRopa articuloRopa = itemArticuloRopaHasMaterial.getArticuloRopa();
             if (!listArticuloRopa.contains(articuloRopa)) {
@@ -53,6 +55,7 @@ public class IndexBean implements Serializable {
                 listMaterial.add(material);
             }
         }
+        */
     }
     
     public int getListMaterialSize() {
@@ -61,9 +64,9 @@ public class IndexBean implements Serializable {
     
     public double getCantidadMaterialxArticuloRopa(ArticuloRopa articuloRopa, Material material) {
         for (ArticuloRopaHasMaterial itemArticuloRopaHasMaterial : listArticuloRopaHasMaterial) {
-            ArticuloRopa articuloRopaAux = itemArticuloRopaHasMaterial.getArticuloRopa();
-            Material materialAux = itemArticuloRopaHasMaterial.getMaterial();
-            if (articuloRopaAux.equals(articuloRopa) && materialAux.equals(material)) {
+            int articuloRopaId = itemArticuloRopaHasMaterial.getArticuloRopa().getArticuloRopaId();
+            int materialId = itemArticuloRopaHasMaterial.getMaterial().getMaterialId();
+            if(Objects.equals(articuloRopa.getArticuloRopaId(), articuloRopaId) && Objects.equals(material.getMaterialId(), materialId)) {
                 return itemArticuloRopaHasMaterial.getCantidad();
             }
         }
