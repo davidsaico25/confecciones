@@ -7,6 +7,10 @@ package lingo;
 
 import com.lindo.Lingd15;
 import java.util.ArrayList;
+import java.util.List;
+import model.ArticuloRopa;
+import model.Linea;
+import model.Material;
 /**
  *
  * @author david
@@ -38,6 +42,7 @@ public class FOLingo {
     
     int nLastIterationCount;
     
+    /*
     public FOLingo(double[] costoDiseno, double[] costoDesfile, double[] precioArticulo, double[] costoMOMQ,
             double[] demanda, double[] precioYarda, double[] matDisp, double[] cantidadYarda) {
         // Create the Lingo environment.
@@ -58,6 +63,32 @@ public class FOLingo {
         this.matDisp = matDisp;
         this.cantidadYarda = cantidadYarda;
     }
+    */
+    
+    public FOLingo(List<Linea> listLinea, List<ArticuloRopa> listArticuloRopa, List<Material> listMaterial) {
+        for (int i = 0; i < costoDisenio.length; i++) {
+            costoDisenio[i] = listLinea.get(i).getCostoDiseno();
+            costoDesfile[i] = listLinea.get(i).getCostoDesfile();
+        }
+        for (int i = 0; i < listArticuloRopa.size(); i++) {
+            precioArticulo[i] = listArticuloRopa.get(i).getPrecioVenta();
+            costoMOMQ[i] = listArticuloRopa.get(i).getPrecioCosto();
+            demanda[i] = listArticuloRopa.get(i).getDemanda();
+        }
+        for (int i = 0; i < listMaterial.size(); i++) {
+            precioYarda[i] = listMaterial.get(i).getPrecioCostoPorYarda();
+            matDisp[i] = listMaterial.get(i).getCantidad();
+        }
+        // Create the Lingo environment.
+        // We do this here in the constructor so as not to repeat this
+        // for each subsequent solve, improving performance.
+        // Be sure to delete the Lingo environment on exit.
+        pLngEnv = lng.LScreateEnvLng();
+        if (pLngEnv == null) {
+            System.out.println("Unable to create Lingo environment");
+            return;
+        }
+    }
     
     private static int MySolverCallback(Object pnLng, int iLoc, Object jobj) {
         FOLingo foLingo = (FOLingo) jobj;
@@ -72,7 +103,7 @@ public class FOLingo {
        return(0);
     }
     
-    private ArrayList<double[]> solve() {
+    public ArrayList<double[]> solve() {
         ArrayList<double[]> listSolucion = new ArrayList<>();
         
         double dStatus[] = new double [1];

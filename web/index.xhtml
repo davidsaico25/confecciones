@@ -21,6 +21,9 @@
                             <p:row>
                                 <p:column rowspan="2" headerText="Articulo Ropa" />
                                 <p:column colspan="#{indexBean.listMaterialSize}" headerText="Materiales" />
+                                <p:column rowspan="2" headerText="Precio" />
+                                <p:column rowspan="2" headerText="Costo Mano de Obra" />
+                                <p:column rowspan="2" headerText="Demanda" />
                             </p:row>
                             <p:row>
                                 <ui:repeat value="#{indexBean.listMaterial}" var="material">
@@ -36,6 +39,18 @@
                         <p:columns value="#{indexBean.listMaterial}" var="material">
                             <h:outputText value="#{indexBean.getCantidadMaterialxArticuloRopa(articuloRopa, material)}"/>
                         </p:columns>
+                        
+                        <p:column>
+                            <h:outputText value="#{articuloRopa.precioVenta}" />
+                        </p:column>
+                        
+                        <p:column>
+                            <h:outputText value="#{articuloRopa.precioCosto}" />
+                        </p:column>
+                        
+                        <p:column>
+                            <h:outputText value="#{articuloRopa.demanda}" />
+                        </p:column>
                     </p:dataTable>
                 </h:form>
 
