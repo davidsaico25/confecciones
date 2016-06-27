@@ -32,7 +32,7 @@ public class FOLingo {
         
     // Load the Lingo JNI interface
     static {
-        
+        System.loadLibrary("Lingj64_15");
     }
     
     // Create a new Lingo object, which we will use to interface with Lingo
@@ -44,7 +44,6 @@ public class FOLingo {
     int nLastIterationCount;
     
     public FOLingo(List<Linea> listLinea, List<ArticuloRopa> listArticuloRopa, List<Material> listMaterial) {
-        System.loadLibrary("Lingj64_15");
         System.out.println("FOLingo");
         // Create the Lingo environment.
         // We do this here in the constructor so as not to repeat this
