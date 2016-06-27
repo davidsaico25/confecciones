@@ -67,6 +67,17 @@
                         <h:outputText value="#{articuloRopa.precioCosto}" />
                     </p:column>
                 </p:dataTable>
+                
+                
+                <p:dataTable var="articuloRopa" value="#{indexBean.listSolArticuloRopa}">
+                    <f:facet name="header">
+                        Articulos Ropaaaa
+                    </f:facet>
+                    
+                    <p:column>
+                        <h:outputText value="#{articuloRopa}" />
+                    </p:column>
+                </p:dataTable>
             </ui:define>
 
         </ui:composition>

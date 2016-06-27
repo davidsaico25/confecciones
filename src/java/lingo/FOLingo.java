@@ -8,6 +8,7 @@ package lingo;
 import com.lindo.Lingd15;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import model.ArticuloRopa;
 import model.Linea;
 import model.Material;
@@ -31,7 +32,7 @@ public class FOLingo {
         
     // Load the Lingo JNI interface
     static {
-        System.loadLibrary("Lingj64_15");
+        
     }
     
     // Create a new Lingo object, which we will use to interface with Lingo
@@ -42,9 +43,9 @@ public class FOLingo {
     
     int nLastIterationCount;
     
-    /*
-    public FOLingo(double[] costoDiseno, double[] costoDesfile, double[] precioArticulo, double[] costoMOMQ,
-            double[] demanda, double[] precioYarda, double[] matDisp, double[] cantidadYarda) {
+    public FOLingo(List<Linea> listLinea, List<ArticuloRopa> listArticuloRopa, List<Material> listMaterial) {
+        System.loadLibrary("Lingj64_15");
+        System.out.println("FOLingo");
         // Create the Lingo environment.
         // We do this here in the constructor so as not to repeat this
         // for each subsequent solve, improving performance.
@@ -54,21 +55,11 @@ public class FOLingo {
             System.out.println("Unable to create Lingo environment");
             return;
         }
-        this.costoDisenio = costoDiseno;
-        this.costoDesfile = costoDesfile;
-        this.precioArticulo = precioArticulo;
-        this.costoMOMQ = costoMOMQ;
-        this.demanda = demanda;
-        this.precioYarda = precioYarda;
-        this.matDisp = matDisp;
-        this.cantidadYarda = cantidadYarda;
-    }
-    */
-    
-    public FOLingo(List<Linea> listLinea, List<ArticuloRopa> listArticuloRopa, List<Material> listMaterial) {
+        /*
         for (int i = 0; i < costoDisenio.length; i++) {
             costoDisenio[i] = listLinea.get(i).getCostoDiseno();
             costoDesfile[i] = listLinea.get(i).getCostoDesfile();
+            System.out.println(costoDisenio[i] + " " + costoDesfile[i]);
         }
         for (int i = 0; i < listArticuloRopa.size(); i++) {
             precioArticulo[i] = listArticuloRopa.get(i).getPrecioVenta();
@@ -79,15 +70,7 @@ public class FOLingo {
             precioYarda[i] = listMaterial.get(i).getPrecioCostoPorYarda();
             matDisp[i] = listMaterial.get(i).getCantidad();
         }
-        // Create the Lingo environment.
-        // We do this here in the constructor so as not to repeat this
-        // for each subsequent solve, improving performance.
-        // Be sure to delete the Lingo environment on exit.
-        pLngEnv = lng.LScreateEnvLng();
-        if (pLngEnv == null) {
-            System.out.println("Unable to create Lingo environment");
-            return;
-        }
+        */
     }
     
     private static int MySolverCallback(Object pnLng, int iLoc, Object jobj) {
@@ -103,13 +86,12 @@ public class FOLingo {
        return(0);
     }
     
-    public ArrayList<double[]> solve() {
-        ArrayList<double[]> listSolucion = new ArrayList<>();
+    public List<List<Double>> solve() {
+        List<List<Double>> listSolucion = new ArrayList<>();
         
         double dStatus[] = new double [1];
         
         try {
-            /*
             costoDisenio[0] = 0;
             costoDisenio[1] = 860000;
             
@@ -245,7 +227,7 @@ public class FOLingo {
             cantidadYarda[74] = 1.5;
             cantidadYarda[75] = 0;
             cantidadYarda[76] = 0;
-            */
+            
         } catch ( Exception e) {
             System.out.println("Invalid staffing needs data.");
             return null;
@@ -363,7 +345,7 @@ public class FOLingo {
        String sScript = "SET ECHOIN 1" + "\n";
        
        // load the model from disk
-       sScript = sScript + "TAKE proyectoio.lng" + "\n";
+       sScript = sScript + "TAKE C:\\Users\\david\\Documents\\NetBeansProjects\\confecciones\\proyecto.lng" + "\n";
        
        // view the formulation
        sScript = sScript + "LOOK ALL" + "\n";
@@ -418,8 +400,29 @@ public class FOLingo {
        }
        */
        
-       listSolucion.add(solX);
-       listSolucion.add(solY);
+       //listSolucion.add(solX);
+       //listSolucion.add(solY);
+       System.out.println("SolX:");
+        for (int i = 0; i < solX.length; i++) {
+            System.out.println("SolX [" + i + "] = " + solX[i]);
+        }
+        
+        System.out.println("SolY:");
+        for (int i = 0; i < solY.length; i++) {
+            System.out.println("SolY [" + i + "] = " + solY[i]);
+        }
+       
+       List<Double> listSolX = new ArrayList<>();
+       List<Double> listSolY = new ArrayList<>();
+        for (int i = 0; i < solX.length; i++) {
+            listSolX.add(solX[i]);
+        }
+        for (int i = 0; i < solY.length; i++) {
+            listSolY.add(solY[i]);
+        }
+       System.runFinalization();
+       listSolucion.add(listSolX);
+       listSolucion.add(listSolY);
        return listSolucion;
     }
 }

@@ -34,6 +34,9 @@ public class IndexBean implements Serializable {
     private List<ArticuloRopaHasMaterial> listArticuloRopaHasMaterial;
     private List<Linea> listLinea;
     
+    private List<Double> listSolArticuloRopa = new ArrayList<>();
+    private List<Double> listSolMaterial = new ArrayList<>();
+    
     private DAOArticuloRopa daoArticuloRopa;
     private DAOMaterial daoMaterial;
     private DAOArticuloRopaHasMaterial dAOArticuloRopaHasMaterial;
@@ -49,10 +52,33 @@ public class IndexBean implements Serializable {
         listMaterial = daoMaterial.getListMaterial();
         listArticuloRopaHasMaterial = dAOArticuloRopaHasMaterial.getListArticuloRopaHasMaterial();
         listLinea = daoLinea.getListLinea();
+        
+  //      System.out.println("listLinea = " + listLinea.get(0).getCostoDiseno());
+//        System.out.println("listSolArticuloRopa = " + listSolArticuloRopa.get(0));
+        for (ArticuloRopa articuloRopa : listArticuloRopa) {
+            System.out.println("bean...ArticuloRopa: " + articuloRopa.getDemanda());
+            System.out.println("bean...ArticuloRopa: " + articuloRopa.getPrecioCosto());
+            System.out.println("bean...ArticuloRopa: " + articuloRopa.getPrecioVenta());
+        }
+        for (Linea linea : listLinea) {
+            System.out.println("bean...Linea: " + linea.getNombre());
+        }
+        for (Material material : listMaterial) {
+            System.out.println("bean...Material: " + material.getNombre());
+        }
         FOLingo foLingo = new FOLingo(listLinea, listArticuloRopa, listMaterial);
-        ArrayList<double[]> listSolucion = new ArrayList<>();
+        List<List<Double>> listSolucion = new ArrayList<>();
         listSolucion = foLingo.solve();
-        System.out.println("holaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + listSolucion.size());
+        System.out.println("listSolucion = " + listSolucion.size());
+        System.out.println("listArticuloRopa = " + listSolucion.get(0).size());
+        System.out.println("listMaterial = " + listSolucion.get(1).size());
+        listSolArticuloRopa = listSolucion.get(0);
+        listSolMaterial = listSolucion.get(1);
+        System.out.println("listSolArticuloRopa = " + listSolArticuloRopa.size());
+        System.out.println("listSolArticuloRopa = " + listSolArticuloRopa.get(0));
+        System.out.println("listSolMaterial = " + listSolMaterial.size());
+        foLingo = null;
+
     }
     
     public int getListMaterialSize() {
@@ -92,5 +118,21 @@ public class IndexBean implements Serializable {
 
     public void setListArticuloRopaHasMaterial(List<ArticuloRopaHasMaterial> listArticuloRopaHasMaterial) {
         this.listArticuloRopaHasMaterial = listArticuloRopaHasMaterial;
+    }
+
+    public List<Double> getListSolArticuloRopa() {
+        return listSolArticuloRopa;
+    }
+
+    public void setListSolArticuloRopa(List<Double> listSolArticuloRopa) {
+        this.listSolArticuloRopa = listSolArticuloRopa;
+    }
+
+    public List<Double> getListSolMaterial() {
+        return listSolMaterial;
+    }
+
+    public void setListSolMaterial(List<Double> listSolMaterial) {
+        this.listSolMaterial = listSolMaterial;
     }
 }
