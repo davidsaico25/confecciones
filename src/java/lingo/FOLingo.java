@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import model.ArticuloRopa;
+import model.ArticuloRopaHasMaterial;
 import model.Linea;
 import model.Material;
 /**
@@ -29,7 +30,7 @@ public class FOLingo {
 
     double[] solX = new double[11];
     double[] solY = new double[7];
-        
+    
     // Load the Lingo JNI interface
     static {
         System.loadLibrary("Lingj64_15");
@@ -43,7 +44,7 @@ public class FOLingo {
     
     int nLastIterationCount;
     
-    public FOLingo(List<Linea> listLinea, List<ArticuloRopa> listArticuloRopa, List<Material> listMaterial) {
+    public FOLingo(List<Linea> listLinea, List<ArticuloRopa> listArticuloRopa, List<Material> listMaterial, List<ArticuloRopaHasMaterial> listArticuloRopaHasMaterial) {
         System.out.println("FOLingo");
         // Create the Lingo environment.
         // We do this here in the constructor so as not to repeat this
@@ -54,7 +55,7 @@ public class FOLingo {
             System.out.println("Unable to create Lingo environment");
             return;
         }
-        /*
+        
         for (int i = 0; i < costoDisenio.length; i++) {
             costoDisenio[i] = listLinea.get(i).getCostoDiseno();
             costoDesfile[i] = listLinea.get(i).getCostoDesfile();
@@ -69,7 +70,9 @@ public class FOLingo {
             precioYarda[i] = listMaterial.get(i).getPrecioCostoPorYarda();
             matDisp[i] = listMaterial.get(i).getCantidad();
         }
-        */
+        for (int i = 0; i < listArticuloRopaHasMaterial.size(); i++) {
+            cantidadYarda[i] = listArticuloRopaHasMaterial.get(i).getCantidad();
+        }
     }
     
     private static int MySolverCallback(Object pnLng, int iLoc, Object jobj) {
@@ -91,6 +94,7 @@ public class FOLingo {
         double dStatus[] = new double [1];
         
         try {
+            /*
             costoDisenio[0] = 0;
             costoDisenio[1] = 860000;
             
@@ -226,7 +230,7 @@ public class FOLingo {
             cantidadYarda[74] = 1.5;
             cantidadYarda[75] = 0;
             cantidadYarda[76] = 0;
-            
+            */
         } catch ( Exception e) {
             System.out.println("Invalid staffing needs data.");
             return null;
@@ -386,18 +390,6 @@ public class FOLingo {
           System.out.println( "***LScloseLogFileLng() error***: " + nErr);
           return null;
        }
-       
-       /*
-       System.out.println("SolX:");
-       for (int i = 0; i < solX.length; i++) {
-           System.out.println("SolX[" + i + "] = " + solX[i]);
-       }
-       
-       System.out.println("SolY:");
-       for (int i = 0; i < solY.length; i++) {
-           System.out.println("SolY[" + i + "] = " + solY[i]);
-       }
-       */
        
        //listSolucion.add(solX);
        //listSolucion.add(solY);

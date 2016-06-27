@@ -11,6 +11,7 @@
         <ui:composition template="./template.xhtml">
 
             <ui:define name="content">
+                
                 <h:form>
                     <p:dataTable value="#{indexBean.listArticuloRopa}" var="articuloRopa">
                         <f:facet name="header">
@@ -53,31 +54,27 @@
                         </p:column>
                     </p:dataTable>
                 </h:form>
-
-                <p:dataTable var="articuloRopa" value="#{indexBean.listArticuloRopa}">
-                    <f:facet name="header">
-                        Articulos Ropa
-                    </f:facet>
-
-                    <p:column headerText="Id">
-                        <h:outputText value="#{articuloRopa.nombre}" />
-                    </p:column>
-
-                    <p:column headerText="Year">
-                        <h:outputText value="#{articuloRopa.precioCosto}" />
-                    </p:column>
-                </p:dataTable>
-                
                 
                 <p:dataTable var="articuloRopa" value="#{indexBean.listSolArticuloRopa}">
                     <f:facet name="header">
-                        Articulos Ropaaaa
+                        SolX
                     </f:facet>
                     
                     <p:column>
                         <h:outputText value="#{articuloRopa}" />
                     </p:column>
                 </p:dataTable>
+                
+                <p:dataTable var="material" value="#{indexBean.listSolMaterial}">
+                    <f:facet name="header">
+                        SolY
+                    </f:facet>
+                    
+                    <p:column>
+                        <h:outputText value="#{material}" />
+                    </p:column>
+                </p:dataTable>
+                
             </ui:define>
 
         </ui:composition>

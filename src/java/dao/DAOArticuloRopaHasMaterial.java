@@ -24,7 +24,7 @@ public class DAOArticuloRopaHasMaterial extends ADAO_crud<Object> implements Ser
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM ArticuloRopaHasMaterial as arhm inner join fetch arhm.articuloRopa as ar inner join fetch arhm.material as m");
+            Query query = session.createQuery("FROM ArticuloRopaHasMaterial as arhm inner join fetch arhm.articuloRopa as ar inner join fetch arhm.material as m ORDER BY arhm.id");
             listArticuloRopaHasMaterial = (List<ArticuloRopaHasMaterial>) query.list();
         } catch(Exception e) {
         } finally {
