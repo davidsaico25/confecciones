@@ -7,7 +7,6 @@ package dao;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import model.ArticuloRopa;
 import model.HibernateUtil;

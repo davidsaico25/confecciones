@@ -15,7 +15,7 @@
                 <h:form>
                     <p:dataTable value="#{indexBean.listArticuloRopa}" var="articuloRopa">
                         <f:facet name="header">
-                            Dynamic Columns
+                            Tabla1: Articulo Ropa
                         </f:facet>
 
                         <p:columnGroup type="header">
@@ -49,29 +49,33 @@
                             <h:outputText value="#{articuloRopa.precioCosto}" />
                         </p:column>
                         
-                        <p:column>
+                         <p:column>
                             <h:outputText value="#{articuloRopa.demanda}" />
                         </p:column>
                     </p:dataTable>
                 </h:form>
                 
-                <p:dataTable var="articuloRopa" value="#{indexBean.listSolArticuloRopa}">
+                <p:dataTable var="solucionArticuloRopa" value="#{indexBean.listSolucionArticuloRopa}">
                     <f:facet name="header">
-                        SolX
+                        Solucion Articulo Ropa
                     </f:facet>
                     
                     <p:column>
-                        <h:outputText value="#{articuloRopa}" />
+                        <h:outputText value="#{solucionArticuloRopa.articuloRopa.nombre}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <h:outputText value="#{solucionArticuloRopa.cantidad}" />
                     </p:column>
                 </p:dataTable>
                 
-                <p:dataTable var="material" value="#{indexBean.listSolMaterial}">
+                <p:dataTable var="solMaterial" value="#{indexBean.listSolMaterial}">
                     <f:facet name="header">
-                        SolY
+                        Solucion Material
                     </f:facet>
                     
                     <p:column>
-                        <h:outputText value="#{material}" />
+                        <h:outputText value="#{solMaterial}" />
                     </p:column>
                 </p:dataTable>
                 

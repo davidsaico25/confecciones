@@ -34,6 +34,9 @@ public class IndexBean implements Serializable {
     private List<ArticuloRopaHasMaterial> listArticuloRopaHasMaterial;
     private List<Linea> listLinea;
     
+    private List<SolucionArticuloRopa> listSolucionArticuloRopa;
+    private List<SolucionMaterial> listSolucionMaterial;
+    
     private List<Double> listSolArticuloRopa = new ArrayList<>();
     private List<Double> listSolMaterial = new ArrayList<>();
     
@@ -53,37 +56,11 @@ public class IndexBean implements Serializable {
         listArticuloRopaHasMaterial = dAOArticuloRopaHasMaterial.getListArticuloRopaHasMaterial();
         listLinea = daoLinea.getListLinea();
         
-        System.out.println("\nBean: ArticuloRopa:");
-        for (ArticuloRopa articuloRopa : listArticuloRopa) {
-            System.out.println(articuloRopa.getNombre() + " - " + articuloRopa.getPrecioVenta() + " - " + articuloRopa.getPrecioCosto() + " - " + articuloRopa.getDemanda());
-        }
-        System.out.println("\nBean: Material:");
-        for (Material material : listMaterial) {
-            System.out.println(material.getNombre() + " - " + material.getCantidad() + " - " + material.getPrecioCostoPorYarda());
-        }
-        System.out.println("\nBean: ArticuloRopa Has Material:");
-        for (ArticuloRopaHasMaterial itemArticuloRopaHasMaterial : listArticuloRopaHasMaterial) {
-            System.out.println(itemArticuloRopaHasMaterial.getArticuloRopa().getArticuloRopaId() + ": " + itemArticuloRopaHasMaterial.getArticuloRopa().getNombre() + " - " + itemArticuloRopaHasMaterial.getMaterial().getMaterialId() + ": " + itemArticuloRopaHasMaterial.getMaterial().getNombre() + " = " + itemArticuloRopaHasMaterial.getCantidad());
-        }
-        System.out.println("\nBean: Linea:");
-        for (Linea linea : listLinea) {
-            System.out.println(linea.getNombre());
-        }
-        /*
-        List<Double> listCantidadYarda = new ArrayList<>();
-        double[] cantidadYarda = new double[listArticuloRopa.size() * listMaterial.size()];
-        
-        for (int i = 0; i < listArticuloRopa.size(); i++) {
-            for (int j = 0; j < listMaterial.size(); j++) {
-            }
-        }
-        */
         FOLingo foLingo = new FOLingo(listLinea, listArticuloRopa, listMaterial, listArticuloRopaHasMaterial);
         List<List<Double>> listSolucion = foLingo.solve();
         listSolArticuloRopa = listSolucion.get(0);
         listSolMaterial = listSolucion.get(1);
         foLingo = null;
-
     }
     
     public int getListMaterialSize() {
@@ -139,5 +116,72 @@ public class IndexBean implements Serializable {
 
     public void setListSolMaterial(List<Double> listSolMaterial) {
         this.listSolMaterial = listSolMaterial;
+    }
+
+    public List<SolucionArticuloRopa> getListSolucionArticuloRopa() {
+        listSolucionArticuloRopa = new ArrayList<>();
+        for (int i = 0; i < listArticuloRopa.size(); i++) {
+            SolucionArticuloRopa solucionArticuloRopa = new SolucionArticuloRopa();
+            solucionArticuloRopa.setArticuloRopa(getListArticuloRopa().get(i));
+            solucionArticuloRopa.setCantidad(getListSolArticuloRopa().get(i));
+            listSolucionArticuloRopa.add(solucionArticuloRopa);
+        }
+        return listSolucionArticuloRopa;
+    }
+
+    public void setListSolucionArticuloRopa(List<SolucionArticuloRopa> listSolucionArticuloRopa) {
+        this.listSolucionArticuloRopa = listSolucionArticuloRopa;
+    }
+
+    public List<SolucionMaterial> getListSolucionMaterial() {
+        return listSolucionMaterial;
+    }
+
+    public void setListSolucionMaterial(List<SolucionMaterial> listSolucionMaterial) {
+        this.listSolucionMaterial = listSolucionMaterial;
+    }
+    
+    public class SolucionArticuloRopa {
+        
+        private ArticuloRopa articuloRopa;
+        private double cantidad;
+
+        public ArticuloRopa getArticuloRopa() {
+            return articuloRopa;
+        }
+
+        public void setArticuloRopa(ArticuloRopa articuloRopa) {
+            this.articuloRopa = articuloRopa;
+        }
+
+        public double getCantidad() {
+            return cantidad;
+        }
+
+        public void setCantidad(double cantidad) {
+            this.cantidad = cantidad;
+        }
+    }
+    
+    public class SolucionMaterial {
+        
+        private Material material;
+        private double cantidad;
+
+        public Material getMaterial() {
+            return material;
+        }
+
+        public void setMaterial(Material material) {
+            this.material = material;
+        }
+
+        public double getCantidad() {
+            return cantidad;
+        }
+
+        public void setCantidad(double cantidad) {
+            this.cantidad = cantidad;
+        }
     }
 }

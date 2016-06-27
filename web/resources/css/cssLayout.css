@@ -1,7 +1,6 @@
 
 #top {
     position: relative;
-    background-color: #036fab;
     color: white;
     padding: 5px;
     margin: 0px 0px 10px 0px;
@@ -47,7 +46,7 @@
 }
 
 #top a:link, #top a:visited {
-  color: white;
+  color: black;
   font-weight : bold;
   text-decoration: none;
 }
