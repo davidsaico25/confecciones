@@ -29,35 +29,47 @@ import model.Material;
 @ViewScoped
 public class IndexBean implements Serializable {
     
+    //lista de Articulos de Ropa
     private List<ArticuloRopa> listArticuloRopa;
+    //lista de Materiales
     private List<Material> listMaterial;
+    //matriz de Articulos de Ropa con Materiales
     private List<ArticuloRopaHasMaterial> listArticuloRopaHasMaterial;
+    //lista de lineas
     private List<Linea> listLinea;
     
+    //listas solucion devueltas por Lingo
+    private List<Double> listSolArticuloRopa;
+    private List<Double> listSolMaterial;
+    
+    //listas solucion para enviar a las tablas en las vistas
+    //las clases son declaradas al final de la clase
     private List<SolucionArticuloRopa> listSolucionArticuloRopa;
     private List<SolucionMaterial> listSolucionMaterial;
     
-    private List<Double> listSolArticuloRopa = new ArrayList<>();
-    private List<Double> listSolMaterial = new ArrayList<>();
-    
+    //declara los dao
     private DAOArticuloRopa daoArticuloRopa;
     private DAOMaterial daoMaterial;
     private DAOArticuloRopaHasMaterial dAOArticuloRopaHasMaterial;
     private DAOLinea daoLinea;
     
     public IndexBean() {
+        //instancia los objetos dao
         daoArticuloRopa = new DAOArticuloRopa();
         daoMaterial = new DAOMaterial();
         dAOArticuloRopaHasMaterial = new DAOArticuloRopaHasMaterial();
         daoLinea = new DAOLinea();
         
+        //carga las listas con la informacion de la bd
         listArticuloRopa = daoArticuloRopa.getListArticuloRopa();
         listMaterial = daoMaterial.getListMaterial();
         listArticuloRopaHasMaterial = dAOArticuloRopaHasMaterial.getListArticuloRopaHasMaterial();
         listLinea = daoLinea.getListLinea();
         
+        //prepara para instanciar e iniciar la clase donde se ejecutara el modelo Lingo
         FOLingo foLingo = new FOLingo(listLinea, listArticuloRopa, listMaterial, listArticuloRopaHasMaterial);
         List<List<Double>> listSolucion = foLingo.solve();
+        //se carga los resultados del modelo a las listas
         listSolArticuloRopa = listSolucion.get(0);
         listSolMaterial = listSolucion.get(1);
         foLingo = null;
@@ -68,6 +80,8 @@ public class IndexBean implements Serializable {
     }
     
     public double getCantidadMaterialxArticuloRopa(ArticuloRopa articuloRopa, Material material) {
+        //para llenar la tabla matriz Articulo de Ropa con Material
+        //devuelve la cantidad de material por el articulo de ropa o cero (0) si es que no se usa nada del material
         for (ArticuloRopaHasMaterial itemArticuloRopaHasMaterial : listArticuloRopaHasMaterial) {
             int articuloRopaId = itemArticuloRopaHasMaterial.getArticuloRopa().getArticuloRopaId();
             int materialId = itemArticuloRopaHasMaterial.getMaterial().getMaterialId();
@@ -119,10 +133,14 @@ public class IndexBean implements Serializable {
     }
 
     public List<SolucionArticuloRopa> getListSolucionArticuloRopa() {
+        //crea la lista con objetos de la nueva clase SolucionArticuloRopa la cual tendra el objeto ArticuloRopa
+        //con el resultado que devolvera el modelo Lingo, luego se envia la lista a la tabla de la vista
         listSolucionArticuloRopa = new ArrayList<>();
         for (int i = 0; i < listArticuloRopa.size(); i++) {
             SolucionArticuloRopa solucionArticuloRopa = new SolucionArticuloRopa();
+            //se agrega el objeto Articulo Ropa
             solucionArticuloRopa.setArticuloRopa(getListArticuloRopa().get(i));
+            //se le agrega el resultado enviado por el modelo Lingo
             solucionArticuloRopa.setCantidad(getListSolArticuloRopa().get(i));
             listSolucionArticuloRopa.add(solucionArticuloRopa);
         }
@@ -134,6 +152,13 @@ public class IndexBean implements Serializable {
     }
 
     public List<SolucionMaterial> getListSolucionMaterial() {
+        listSolucionMaterial = new ArrayList<>();
+        for (int i = 0; i < listMaterial.size(); i++) {
+            SolucionMaterial solucionMaterial = new SolucionMaterial();
+            solucionMaterial.setMaterial(getListMaterial().get(i));
+            solucionMaterial.setCantidad(getListSolMaterial().get(i));
+            listSolucionMaterial.add(solucionMaterial);
+        }
         return listSolucionMaterial;
     }
 

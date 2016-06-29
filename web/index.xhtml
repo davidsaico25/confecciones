@@ -55,7 +55,7 @@
                     </p:dataTable>
                 </h:form>
                 
-                <p:dataTable var="solucionArticuloRopa" value="#{indexBean.listSolucionArticuloRopa}">
+                <p:dataTable value="#{indexBean.listSolucionArticuloRopa}" var="solucionArticuloRopa">
                     <f:facet name="header">
                         Solucion Articulo Ropa
                     </f:facet>
@@ -69,13 +69,17 @@
                     </p:column>
                 </p:dataTable>
                 
-                <p:dataTable var="solMaterial" value="#{indexBean.listSolMaterial}">
+                <p:dataTable value="#{indexBean.listSolucionMaterial}" var="solucionMaterial">
                     <f:facet name="header">
                         Solucion Material
                     </f:facet>
                     
                     <p:column>
-                        <h:outputText value="#{solMaterial}" />
+                        <h:outputText value="#{solucionMaterial.material.nombre}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <h:outputText value="#{solucionMaterial.cantidad}" />
                     </p:column>
                 </p:dataTable>
                 
