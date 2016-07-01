@@ -7,9 +7,12 @@ package controller;
 
 import dao.DAOArticuloRopa;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import model.ArticuloRopa;
+import org.primefaces.event.RowEditEvent;
 
 /**
  *
@@ -27,6 +30,22 @@ public class verListaArticuloRopaBean {
         daoArticuloRopa = new DAOArticuloRopa();
         
         listArticuloRopa = daoArticuloRopa.getListArticuloRopa();
+    }
+    
+    public void onRowEdit(RowEditEvent event) {
+        double nuevoPrevioVenta = ((ArticuloRopa) event.getObject()).getPrecioVenta();
+        double nuevoPrecioCosto = ((ArticuloRopa) event.getObject()).getPrecioCosto();
+        ArticuloRopa editadoArticuloRopa = (ArticuloRopa) event.getObject();
+        editadoArticuloRopa.setPrecioVenta(nuevoPrevioVenta);
+        editadoArticuloRopa.setPrecioCosto(nuevoPrecioCosto);
+        daoArticuloRopa.update(editadoArticuloRopa);
+        FacesMessage msg = new FacesMessage("Editado", ((ArticuloRopa) event.getObject()).getNombre());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+    
+    public void onRowCancel(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Edicion cancelada", ((ArticuloRopa) event.getObject()).getPrecioVenta() +"");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     public List<ArticuloRopa> getListArticuloRopa() {

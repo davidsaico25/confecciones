@@ -8,25 +8,43 @@
 
     <ui:define name="content">
         
-        <h:panelGrid columns="12" cellpadding="8">
-            <p:dataTable value="#{verListaArticuloRopaBean.listArticuloRopa}" var="articuloRopa">
+        <h:form id="form">
+            <p:growl id="msgs" showDetail="true"/>
+            
+            <p:dataTable id="articulosRopas" var="articuloRopa" value="#{verListaArticuloRopaBean.listArticuloRopa}" editable="true" style="margin-bottom: 20px">
                 <f:facet name="header">
                     Articulo Ropa
                 </f:facet>
-
+                
+                <p:ajax event="rowEdit" listener="#{verListaArticuloRopaBean.onRowEdit}" update=":form:msgs"/>
+                <p:ajax event="rowEditCancel" listener="#{verListaArticuloRopaBean.onRowCancel}" update=":form:msgs"/>
+                
                 <p:column headerText="Nombre">
-                    <h:outputText value="#{articuloRopa.nombre}"/>
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{articuloRopa.nombre}"/></f:facet>
+                        <f:facet name="input"><h:inputText value="#{articuloRopa.nombre}" style="width: 100%" label="Nombre"/></f:facet>
+                    </p:cellEditor>
                 </p:column>
-
+                
                 <p:column headerText="Precio Venta">
-                    <h:outputText value="#{articuloRopa.precioVenta}"/>
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{articuloRopa.precioVenta}"/></f:facet>
+                        <f:facet name="input"><h:inputText value="#{articuloRopa.precioVenta}" style="width: 100%" label="Precio Venta"/></f:facet>
+                    </p:cellEditor>
                 </p:column>
-
-                <p:column headerText="Precio Costo">
-                    <h:outputText value="#{articuloRopa.precioCosto}"/>
+                
+                <p:column headerText="Precio Compra">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{articuloRopa.precioCosto}"/></f:facet>
+                        <f:facet name="input"><h:inputText value="#{articuloRopa.precioCosto}" style="width: 100%" label="Precio Compra"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                <p:column style="width:32px">
+                    <p:rowEditor />
                 </p:column>
             </p:dataTable>
-        </h:panelGrid>
+        </h:form>
         
     </ui:define>
 
