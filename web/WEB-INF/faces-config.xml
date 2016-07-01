@@ -12,6 +12,18 @@
             <redirect/>
         </navigation-case>
         
+        <navigation-case>
+            <from-outcome>verListaArticuloRopa</from-outcome>
+            <to-view-id>/articuloRopa/verListaArticuloRopa.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>verListaMaterial</from-outcome>
+            <to-view-id>/material/verListaMaterial.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        
     </navigation-rule>
     
 </faces-config>

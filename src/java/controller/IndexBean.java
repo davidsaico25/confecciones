@@ -116,6 +116,14 @@ public class IndexBean implements Serializable {
         this.listArticuloRopaHasMaterial = listArticuloRopaHasMaterial;
     }
 
+    public List<Linea> getListLinea() {
+        return listLinea;
+    }
+
+    public void setListLinea(List<Linea> listLinea) {
+        this.listLinea = listLinea;
+    }
+
     public List<Double> getListSolArticuloRopa() {
         return listSolArticuloRopa;
     }

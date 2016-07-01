@@ -12,76 +12,99 @@
 
             <ui:define name="content">
                 
-                <h:form>
+                <h:panelGrid columns="12" cellpadding="8">
                     <p:dataTable value="#{indexBean.listArticuloRopa}" var="articuloRopa">
-                        <f:facet name="header">
-                            Tabla1: Articulo Ropa
-                        </f:facet>
-
-                        <p:columnGroup type="header">
-                            <p:row>
-                                <p:column rowspan="2" headerText="Articulo Ropa" />
-                                <p:column colspan="#{indexBean.listMaterialSize}" headerText="Materiales" />
-                                <p:column rowspan="2" headerText="Precio" />
-                                <p:column rowspan="2" headerText="Costo Mano de Obra" />
-                                <p:column rowspan="2" headerText="Demanda" />
-                            </p:row>
-                            <p:row>
-                                <ui:repeat value="#{indexBean.listMaterial}" var="material">
-                                    <p:column headerText="#{material.nombre}" />
-                                </ui:repeat>
-                            </p:row>
-                        </p:columnGroup>
-
-                        <p:column>
-                            <h:outputText value="#{articuloRopa.nombre}" />
-                        </p:column>
-
-                        <p:columns value="#{indexBean.listMaterial}" var="material">
-                            <h:outputText value="#{indexBean.getCantidadMaterialxArticuloRopa(articuloRopa, material)}"/>
-                        </p:columns>
-                        
-                        <p:column>
-                            <h:outputText value="#{articuloRopa.precioVenta}" />
-                        </p:column>
-                        
-                        <p:column>
-                            <h:outputText value="#{articuloRopa.precioCosto}" />
-                        </p:column>
-                        
-                         <p:column>
-                            <h:outputText value="#{articuloRopa.demanda}" />
-                        </p:column>
-                    </p:dataTable>
-                </h:form>
-                
-                <p:dataTable value="#{indexBean.listSolucionArticuloRopa}" var="solucionArticuloRopa">
                     <f:facet name="header">
-                        Solucion Articulo Ropa
+                        Tabla1: Articulo Ropa
                     </f:facet>
-                    
+
+                    <p:columnGroup type="header">
+                        <p:row>
+                            <p:column rowspan="2" headerText="Articulo Ropa" />
+                            <p:column colspan="#{indexBean.listMaterialSize}" headerText="Materiales" />
+                            <p:column rowspan="2" headerText="Precio" />
+                            <p:column rowspan="2" headerText="Costo Mano de Obra" />
+                            <p:column rowspan="2" headerText="Demanda" />
+                        </p:row>
+                        <p:row>
+                            <ui:repeat value="#{indexBean.listMaterial}" var="material">
+                                <p:column headerText="#{material.nombre}" />
+                            </ui:repeat>
+                        </p:row>
+                    </p:columnGroup>
+
                     <p:column>
-                        <h:outputText value="#{solucionArticuloRopa.articuloRopa.nombre}" />
+                        <h:outputText value="#{articuloRopa.nombre}" />
                     </p:column>
-                    
+
+                    <p:columns value="#{indexBean.listMaterial}" var="material">
+                        <h:outputText value="#{indexBean.getCantidadMaterialxArticuloRopa(articuloRopa, material)}"/>
+                    </p:columns>
+
                     <p:column>
-                        <h:outputText value="#{solucionArticuloRopa.cantidad}" />
+                        <h:outputText value="#{articuloRopa.precioVenta}" />
                     </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{articuloRopa.precioCosto}" />
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{articuloRopa.demanda}" />
+                    </p:column>
+
+                    <p:columnGroup type="footer">
+                        <p:row>
+                            <p:column style="text-align:right" footerText="Precio por Yarda" />
+
+                            <ui:repeat value="#{indexBean.listMaterial}" var="material">
+                                <p:column footerText="#{material.precioCostoPorYarda}" />
+                            </ui:repeat>
+                        </p:row>
+                        <p:row>
+                            <p:column style="text-align:right" footerText="Disponibilidad" />
+
+                            <ui:repeat value="#{indexBean.listMaterial}" var="material">
+                                <p:column footerText="#{material.cantidad}" />
+                            </ui:repeat>
+                        </p:row>
+                    </p:columnGroup>
                 </p:dataTable>
+                </h:panelGrid>
                 
-                <p:dataTable value="#{indexBean.listSolucionMaterial}" var="solucionMaterial">
-                    <f:facet name="header">
-                        Solucion Material
-                    </f:facet>
-                    
-                    <p:column>
-                        <h:outputText value="#{solucionMaterial.material.nombre}" />
-                    </p:column>
-                    
-                    <p:column>
-                        <h:outputText value="#{solucionMaterial.cantidad}" />
-                    </p:column>
-                </p:dataTable>
+                <h:panelGrid title="Solucion" columns="12" cellpadding="8">
+                    <h:panelGrid columns="6" cellpadding="8">
+                        <p:dataTable value="#{indexBean.listSolucionArticuloRopa}" var="solucionArticuloRopa">
+                            <f:facet name="header">
+                                Solucion Articulo Ropa
+                            </f:facet>
+
+                            <p:column>
+                                <h:outputText value="#{solucionArticuloRopa.articuloRopa.nombre}" />
+                            </p:column>
+
+                            <p:column>
+                                <h:outputText value="#{solucionArticuloRopa.cantidad}" />
+                            </p:column>
+                        </p:dataTable>
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="6" cellpadding="8">
+                        <p:dataTable value="#{indexBean.listSolucionMaterial}" var="solucionMaterial">
+                            <f:facet name="header">
+                                Solucion Material
+                            </f:facet>
+
+                            <p:column>
+                                <h:outputText value="#{solucionMaterial.material.nombre}" />
+                            </p:column>
+
+                            <p:column>
+                                <h:outputText value="#{solucionMaterial.cantidad}" />
+                            </p:column>
+                        </p:dataTable>
+                    </h:panelGrid>
+                </h:panelGrid>
                 
             </ui:define>
 
