@@ -7,9 +7,12 @@ package controller;
 
 import dao.DAOMaterial;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import model.Material;
+import org.primefaces.event.RowEditEvent;
 
 /**
  *
@@ -27,6 +30,20 @@ public class verListaMaterial {
         daoMaterial = new DAOMaterial();
         
         listMaterial = daoMaterial.getListMaterial();
+    }
+    
+    public void onRowEdit(RowEditEvent event) {
+        double nuevoPrevioCostoPorYarda = ((Material) event.getObject()).getPrecioCostoPorYarda();
+        Material editadoMaterial = (Material) event.getObject();
+        editadoMaterial.setPrecioCostoPorYarda(nuevoPrevioCostoPorYarda);
+        daoMaterial.update(editadoMaterial);
+        FacesMessage msg = new FacesMessage("Editado", ((Material) event.getObject()).getNombre());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+    
+    public void onRowCancel(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Edicion cancelada", ((Material) event.getObject()).getNombre());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     public List<Material> getListMaterial() {

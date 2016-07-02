@@ -24,6 +24,37 @@
             </p:dataTable>
         </h:panelGrid>
         
+        <h:form id="form">
+            <p:growl id="msgs" showDetail="true"/>
+            
+            <p:dataTable id="articulosRopas" var="material" value="#{verListaMaterial.listMaterial}" editable="true" style="margin-bottom: 20px">
+                <f:facet name="header">
+                    Articulo Ropa
+                </f:facet>
+                
+                <p:ajax event="rowEdit" listener="#{verListaMaterial.onRowEdit}" update=":form:msgs"/>
+                <p:ajax event="rowEditCancel" listener="#{verListaMaterial.onRowCancel}" update=":form:msgs"/>
+                
+                <p:column headerText="Nombre">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{material.nombre}"/></f:facet>
+                        <f:facet name="input"><h:inputText value="#{material.nombre}" style="width: 100%" label="Nombre"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                <p:column headerText="Precio Venta">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{material.precioCostoPorYarda}"/></f:facet>
+                        <f:facet name="input"><h:inputText value="#{material.precioCostoPorYarda}" style="width: 100%" label="Precio Venta"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                <p:column style="width:32px">
+                    <p:rowEditor />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        
     </ui:define>
 
 </ui:composition>

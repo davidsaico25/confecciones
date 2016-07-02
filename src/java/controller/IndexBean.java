@@ -72,7 +72,6 @@ public class IndexBean implements Serializable {
         //se carga los resultados del modelo a las listas
         listSolArticuloRopa = listSolucion.get(0);
         listSolMaterial = listSolucion.get(1);
-        foLingo = null;
     }
     
     public int getListMaterialSize() {
@@ -93,6 +92,7 @@ public class IndexBean implements Serializable {
     }
 
     public List<ArticuloRopa> getListArticuloRopa() {
+        //listArticuloRopa = daoArticuloRopa.getListArticuloRopa();
         return listArticuloRopa;
     }
 
@@ -101,6 +101,7 @@ public class IndexBean implements Serializable {
     }
     
     public List<Material> getListMaterial() {
+        //listMaterial = daoMaterial.getListMaterial();
         return listMaterial;
     }
 
@@ -117,6 +118,7 @@ public class IndexBean implements Serializable {
     }
 
     public List<Linea> getListLinea() {
+        //listLinea = daoLinea.getListLinea();
         return listLinea;
     }
 
@@ -160,8 +162,9 @@ public class IndexBean implements Serializable {
     }
 
     public List<SolucionMaterial> getListSolucionMaterial() {
+        //listArticuloRopaHasMaterial = dAOArticuloRopaHasMaterial.getListArticuloRopaHasMaterial();
         listSolucionMaterial = new ArrayList<>();
-        for (int i = 0; i < listMaterial.size(); i++) {
+        for (int i = 0; i < getListMaterial().size(); i++) {
             SolucionMaterial solucionMaterial = new SolucionMaterial();
             solucionMaterial.setMaterial(getListMaterial().get(i));
             solucionMaterial.setCantidad(getListSolMaterial().get(i));

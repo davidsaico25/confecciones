@@ -44,7 +44,7 @@ public class verListaArticuloRopaBean {
     }
     
     public void onRowCancel(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Edicion cancelada", ((ArticuloRopa) event.getObject()).getPrecioVenta() +"");
+        FacesMessage msg = new FacesMessage("Edicion cancelada", ((ArticuloRopa) event.getObject()).getNombre());
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
